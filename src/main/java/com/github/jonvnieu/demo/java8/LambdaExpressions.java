@@ -1,8 +1,7 @@
 package com.github.jonvnieu.demo.java8;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.*;
 
 /**
  * <h1>Syntax of a Lambda Expression</h1>
@@ -45,13 +44,46 @@ public class LambdaExpressions {
          *******************************/
 
         List<String> someStrings = Arrays.asList("Batman", "Bruce Wayne", "Superman", "Clark Kent");
-        System.out.println("Original List: " + someStrings);
+        System.out.println("Original Strings: " + someStrings);
 
         someStrings.sort((first, second) -> (first.length() - second.length()));
         System.out.println("Sorted on length: " + someStrings);
 
         someStrings.sort(Comparator.comparingInt(String::length).reversed());
         System.out.println("Reverse sorted on lenth: " + someStrings);
+
+
+        // Sorting a non-primitive class Person
+        List<Person> persons = new ArrayList<>(6);
+        persons.add(new Person("Simpson", "Bart", LocalDate.of(1989, 5, 1)));
+        persons.add(new Person("De Wever", "Bart", LocalDate.of(1970, 12, 21)));
+        persons.add(new Person("Lived", "Eht", LocalDate.of(1966, 6, 6)));
+        persons.add(new Person("Banner", "Bruce", LocalDate.of(1980, 4, 20)));
+        persons.add(new Person("Dickinson", "Bruce", LocalDate.of(1958, 8, 7)));
+        persons.add(new Person("Dickinson II", "Bruce", LocalDate.of(1958, 8, 7)));
+        System.out.println("Original Persons: " + persons);
+        persons.sort(Comparator.comparing(Person::age).thenComparing(Person::name).thenComparing(Person::surname));
+        System.out.println("Sorted Persons: " + persons);
+
+//        // Java 7 alternative:
+//        Collections.sort(persons, new Comparator<Person>() {
+//            @Override
+//            public int compare(Person o1, Person o2) {
+//                if (!o1.surname().equals(o2.surname())) {
+//                    return o1.surname().compareTo(o2.surname());
+//                } else {
+//                    long age1 = o1.age();
+//                    long age2 = o2.age();
+//                    if (age1 != age2) {
+//                        return Long.compare(age1, age2);
+//                    } else {
+//                        return o1.name().compareTo(o2.name());
+//
+//                    }
+//
+//                }
+//            }
+//        });
     }
 
     private static void sayHello() {
