@@ -12,6 +12,8 @@ import java.util.stream.Stream;
 /**
  * <h1>Definition of a {@link java.util.stream.Stream}</h1>
  * A Stream is a sequence of elements (similar to an {@link java.util.Iterator}) that supports parallel execution.
+ * Operations on a Stream create a stream pipeline.
+ * Streams are computed lazily, no operations are done until a terminal operator is called on the stream pipeline.
  */
 public class Streams {
 
