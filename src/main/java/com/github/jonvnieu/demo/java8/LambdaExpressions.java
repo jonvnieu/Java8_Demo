@@ -78,9 +78,7 @@ public class LambdaExpressions {
 //                        return Long.compare(age1, age2);
 //                    } else {
 //                        return o1.name().compareTo(o2.name());
-//
 //                    }
-//
 //                }
 //            }
 //        });
