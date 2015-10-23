@@ -80,5 +80,34 @@ public class Streams {
         summaryStatistics.getMin();
         summaryStatistics.getMin();
         summaryStatistics.getAverage();
+
+        /********************************************
+         * Example 5: A simple Map/Reduce operation *
+         ********************************************/
+
+        // Problem: count all the characters in a collection of Strings
+        List<String> randomStrings = new ArrayList<>(100);
+        IntStream.range(0, 100).forEach(i -> randomStrings.add(UUID.randomUUID().toString()));
+
+        long totalCharacterCount = randomStrings
+                .parallelStream()
+                .mapToLong(String::length)
+                .reduce(0, (a, b) -> a + b); // or just do .sum()
+
+        long uniqueCharacterCount = randomStrings
+                .parallelStream()
+                .flatMapToInt(String::chars)
+                .mapToObj(i -> (char) i)
+                .distinct()
+                .reduce(0, (counter, character) -> counter++, (a, b) -> a + b); // or just do .count()
+
+        // Validation, the old fashioned way
+        Set<Character> characters = new HashSet<>();
+        for (String string : randomStrings) {
+            for (Character character : string.toCharArray()) {
+                characters.add(character);
+            }
+        }
+        assert(uniqueCharacterCount - characters.size() == 0);
     }
 }
